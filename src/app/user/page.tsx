@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { set } from "mongoose";
 
 type User = {
   name: string;
@@ -15,6 +16,7 @@ type User = {
 
 export default function UserDashboard() {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -25,7 +27,7 @@ export default function UserDashboard() {
       }
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/getUser`,
+          `/api/user/getUser`,
           {
             method: "GET",
             headers: {
@@ -77,6 +79,7 @@ export default function UserDashboard() {
   };
 
   const handleRequestApproval = async () => {
+    setLoading(true);
     const token = Cookies.get("token");
     if (!token) {
       window.location.href = "/";
@@ -84,7 +87,7 @@ export default function UserDashboard() {
     }
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/requestApproval`,
+        `/api/user/requestApproval`,
         {
           method: "GET",
           headers: {
@@ -95,11 +98,12 @@ export default function UserDashboard() {
       );
 
       const data = await res.json();
-      alert(data.message || "Request sent!");
       window.location.reload();
     } catch (error) {
       console.error("Error sending request:", error);
       alert("Failed to send request.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -148,9 +152,10 @@ export default function UserDashboard() {
           <div className="text-center">
             <button
               onClick={handleRequestApproval}
+              disabled={loading}
               className="mt-4 px-6 py-2 bg-indigo-600 hover:bg-indigo-900 text-white rounded-full shadow transition duration-300 cursor-pointer"
             >
-              Request Approval
+              {loading ? "Loading..." : "Request Approval"}
             </button>
           </div>
         )}

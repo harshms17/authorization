@@ -28,7 +28,7 @@ export default function AdminRegionPanel() {
 
       try {
         const resUsers = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/getUsers`,
+          `/api/admin/getUsers`,
           {
             method: "GET",
             headers: {
@@ -39,7 +39,7 @@ export default function AdminRegionPanel() {
         );
 
         const resAdmin = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/getUser`,
+          `/api/user/getUser`,
           {
             method: "GET",
             headers: {
@@ -76,7 +76,7 @@ export default function AdminRegionPanel() {
       return;
     }
     await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/userStatusUpdate/${id}`,
+      `/api/admin/userStatusUpdate/${id}`,
       {
         method: "PATCH",
         headers: {
@@ -100,7 +100,7 @@ export default function AdminRegionPanel() {
       return;
     }
     await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/userStatusUpdate/${id}`,
+      `/api/admin/userStatusUpdate/${id}`,
       {
         method: "PATCH",
         headers: {

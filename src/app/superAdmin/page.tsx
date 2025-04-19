@@ -39,8 +39,8 @@ export default function AdminDashboardPage() {
       try {
         const url =
           activeTab === "users"
-            ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/getAllUsers`
-            : `${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/getAllAdmins`;
+            ? `/api/superAdmin/getAllUsers`
+            : `/api/superAdmin/getAllAdmins`;
 
         const res = await fetch(url, {
           method: "GET",
@@ -69,7 +69,7 @@ export default function AdminDashboardPage() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/adminStatusUpdate/${id}`,
+        `/api/superAdmin/adminStatusUpdate/${id}`,
         {
           method: "PATCH",
           headers: {
@@ -101,7 +101,7 @@ export default function AdminDashboardPage() {
   
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/adminStatusUpdate/${id}`,
+        `/api/superAdmin/adminStatusUpdate/${id}`,
         {
           method: "PATCH",
           headers: {
@@ -136,7 +136,7 @@ export default function AdminDashboardPage() {
       const status = block ? "Blocked" : "Declined";
   
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/superAdmin/userStatusUpdate/${id}`,
+        `/api/superAdmin/userStatusUpdate/${id}`,
         {
           method: "PATCH",
           headers: {

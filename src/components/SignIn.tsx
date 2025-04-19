@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
 type SignInProps = {
@@ -11,7 +10,6 @@ type SignInProps = {
 };
 
 export default function SignIn({ role, api, nextPage }: SignInProps) {
-  const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +22,7 @@ export default function SignIn({ role, api, nextPage }: SignInProps) {
     setError("");
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}${api}`, {
+      const res = await fetch(`${api}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -31,7 +31,7 @@ export default function AllUsers({api}: UsersProps) {
 
       try {
         const resUsers = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}${api}`,
+          `${api}`,
           {
             method: "GET",
             headers: {
@@ -65,7 +65,7 @@ export default function AllUsers({api}: UsersProps) {
       return;
     }
     await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/userStatusUpdate/${id}`,
+      `/api/admin/userStatusUpdate/${id}`,
       {
         method: "PATCH",
         headers: {
@@ -89,7 +89,7 @@ export default function AllUsers({api}: UsersProps) {
       return;
     }
     await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/userStatusUpdate/${id}`,
+      `/api/admin/userStatusUpdate/${id}`,
       {
         method: "PATCH",
         headers: {

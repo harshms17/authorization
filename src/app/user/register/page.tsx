@@ -41,7 +41,7 @@ export default function RegisterPage() {
 
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user/register`, {
+      const res = await fetch(`/api/user/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -56,10 +56,18 @@ export default function RegisterPage() {
       }
     } catch (err) {
       setError("error in user registration api");
-    } finally {
-      setLoading(false);
     }
   };
+
+  if(loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-indigo-50 to-purple-100">
+        <div className="text-xl font-medium text-gray-600">
+          Redirecting...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-indigo-100 px-4">

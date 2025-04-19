@@ -8,7 +8,7 @@ export default async function Home() {
 
   if (token) {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/getUser`,
+      `/api/user/getUser`,
       {
         method: "GET",
         headers: { token },
@@ -27,7 +27,7 @@ export default async function Home() {
     }
 
     const isSuperAdmin = await checkSuperAdmin(
-      new Request(`${process.env.NEXT_PUBLIC_BASE_URL}`, {
+      new Request(``, {
         headers: {
           token,
         },
