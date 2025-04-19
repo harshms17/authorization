@@ -5,12 +5,11 @@ import dbConnect from "@/lib/db"; // Ensures MongoDB connection
 
 export async function PATCH(
   req: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
-  const { params } = context;
 
   // Await params to ensure it's ready to use
-  const { id } = await Promise.resolve(params);
+  const { id } = await context.params;
 
   const isSuperAdmin = await checkSuperAdmin(req);
 

@@ -11,7 +11,7 @@ const StatusSchema = z.object({
 // Use a function to handle the context
 export async function PATCH(
   req: NextRequest,
-  context: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   const isSuperAdmin = await checkSuperAdmin(req);
 
@@ -22,11 +22,8 @@ export async function PATCH(
     );
   }
 
-  const { params } = context;
-
   // Await params to ensure it's ready to use
-  const { id } = await Promise.resolve(params);
-
+  const { id } = await context.params;
   if (!id) {
     return NextResponse.json({ error: "User ID is required" }, { status: 400 });
   }
@@ -41,7 +38,7 @@ export async function PATCH(
       const errorMessages = parsed.error.issues.map((issue) => issue.message);
       return NextResponse.json({ errors: errorMessages }, { status: 400 });
     }
-
+    
     const updatedUser = await User.findByIdAndUpdate(id, {
       status: parsed.data.status,
     });
