@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌐 Role-Based User Management Web App
 
-## Getting Started
+A full-stack web application that enables seamless user registration, region-based user management by admins, and global oversight by super admins. This platform ensures secure onboarding, hierarchical control, and modular access—perfect for organizations needing a controlled user flow and approval pipeline.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 🔐 **User Registration & Login**: Secure signup/login using JWT authentication.
+- 🧐 **Approval-Based Access**: New users are kept in a "pending" state until approved.
+- 🛂 **Admin Role**: Admins can view and manage users in their assigned region.
+- 🧠 **Super Admin Role**: Has full access to monitor and manage all users, regions, and admins.
+- 📍 **Region-Based Segmentation**: Each user and admin is associated with a specific region.
+- ✨ **Dynamic Role Elevation**: Approved users can be promoted to admins by a super admin.
+- 🛡️ **Role-Based Authorization Middleware**: Ensures only permitted users can access protected resources.
+- 📊 **User Status Management**: Admins and super admins can update user statuses (e.g., approved, suspended).
+- ⚙️ **Robust API Design**: RESTful APIs built with Next.js for scalable backend logic.
+- 💬 **Real-time Feedback**: Clean UI with loading indicators and error handling.
+- 🧪 **Type-safe APIs with Zod & TypeScript**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧑‍💻 Tech Stack
 
-## Learn More
+| Layer          | Tech Used                                |
+|----------------|--------------------------------------------|
+| Frontend       | React, Tailwind CSS, TypeScript            |
+| Backend        | Next.js App Router, API Routes             |
+| Database       | MongoDB (with Mongoose ODM)                |
+| Authentication | JWT, HttpOnly Cookies                      |
+| Validation     | Zod                                        |
+| Hosting        | Vercel (Frontend & API) + MongoDB Atlas    |
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 😺 Roles Overview
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 👤 User
+- Registers and waits for approval.
+- Views personal dashboard once approved.
 
-## Deploy on Vercel
+### 🧑‍💼 Admin
+- Assigned a region.
+- Views and manages users in their region.
+- Updates user statuses within their region.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 👑 Super Admin
+- Full access to all data across all regions.
+- Promotes users to admins.
+- Manages both users and admins.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
