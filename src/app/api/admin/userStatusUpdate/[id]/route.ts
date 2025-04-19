@@ -9,12 +9,14 @@ const StatusSchema = z.object({
   status: z.string().min(1, 'Status is required'),
 });
 
-// Use a function to handle the context
-export async function PATCH(req: NextRequest, context: { params: { id: string } }) {
+export async function PATCH(
+  req: NextRequest,
+  context: { params: { id: string } }
+) {
   const { params } = context;
 
-  // Await params to ensure it's ready to use
-  const { id } = await Promise.resolve(params);
+  // Ensure params are ready to use
+  const { id } = params;
 
   const userResult = await getUserFromToken(req);
   if ('status' in userResult) return userResult;
@@ -36,7 +38,7 @@ export async function PATCH(req: NextRequest, context: { params: { id: string } 
     const parsed = StatusSchema.safeParse(body);
 
     if (!parsed.success) {
-      const errorMessages = parsed.error.issues.map(issue => issue.message);
+      const errorMessages = parsed.error.issues.map((issue) => issue.message);
       return NextResponse.json({ errors: errorMessages }, { status: 400 });
     }
 
