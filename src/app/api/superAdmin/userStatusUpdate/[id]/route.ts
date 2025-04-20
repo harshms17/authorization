@@ -3,6 +3,7 @@ import dbConnect from "@/lib/db";
 import User from "@/models/User";
 import { checkSuperAdmin } from "@/lib/checkSuperAdmin";
 import { z } from "zod";
+import { sendMail } from "@/lib/sendMail";
 
 const StatusSchema = z.object({
   status: z.string().min(1, "Status is required"),
@@ -38,7 +39,7 @@ export async function PATCH(
       const errorMessages = parsed.error.issues.map((issue) => issue.message);
       return NextResponse.json({ errors: errorMessages }, { status: 400 });
     }
-    
+
     const updatedUser = await User.findByIdAndUpdate(id, {
       status: parsed.data.status,
     });
@@ -46,6 +47,17 @@ export async function PATCH(
     if (!updatedUser) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
+    
+    const { email, status } = updatedUser;
+    const subject = `Status Update Notification`;
+    const message =
+      status === "Approved" || status === "Declined"
+        ? `Your request has been ${status}.`
+        : `You are blocked by the Founder.`;
+    sendMail({ to: email, subject, message })
+      .then(() => console.log("Email sent successfully"))
+      .catch((error) => console.error("Error sending email:", error));
+
     return NextResponse.json(
       { message: "User status updated successfully" },
       { status: 200 }

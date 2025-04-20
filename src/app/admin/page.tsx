@@ -68,7 +68,7 @@ export default function AdminRegionPanel() {
 
   const handleStatusUpdate = async (
     id: string,
-    status: "Registered" | "Declined"
+    status: "Approved" | "Declined"
   ) => {
     const token = Cookies.get("token");
     if (!token) {
@@ -164,7 +164,7 @@ export default function AdminRegionPanel() {
                   </div>
                   <div className="flex gap-2 mt-4 md:mt-0">
                     <button
-                      onClick={() => handleStatusUpdate(user._id, "Registered")}
+                      onClick={() => handleStatusUpdate(user._id, "Approved")}
                       className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded cursor-pointer"
                     >
                       Approve

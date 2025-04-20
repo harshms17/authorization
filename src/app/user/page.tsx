@@ -117,6 +117,16 @@ export default function UserDashboard() {
     );
   }
 
+  if(user.status === "Blocked") {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-indigo-50 to-purple-100">
+        <div className="text-xl font-medium text-gray-600">
+          Your account is blocked. Please contact support.
+        </div>
+      </div>
+    );
+  }
+
   const statusInfo = getStatusMessage(user.status);
   const showRequestButton = ["Registered", "Declined"].includes(user.status);
 

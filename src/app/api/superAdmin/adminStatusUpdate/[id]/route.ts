@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { checkSuperAdmin } from "@/lib/checkSuperAdmin";
 import User from "@/models/User";
 import dbConnect from "@/lib/db"; // Ensures MongoDB connection
+import { sendMail } from "@/lib/sendMail";
 
 export async function PATCH(
   req: NextRequest,
@@ -43,6 +44,15 @@ export async function PATCH(
     if (!updatedUser) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
+
+    const { email, isAdmin } = updatedUser;
+    const subject = `Admin Status Update Notification`;
+    const message = isAdmin
+      ? `You have been granted admin privileges.`
+      : `Your admin privileges have been revoked.`;
+    sendMail({ to: email, subject, message })
+      .then(() => console.log("Email sent successfully"))
+      .catch((error) => console.error("Error sending email:", error));
 
     return NextResponse.json({
       message: "Admin status updated successfully",

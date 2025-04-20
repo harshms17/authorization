@@ -21,8 +21,8 @@ const Navbar = () => {
     <nav className="w-full bg-white shadow-md py-4 px-6 flex justify-between items-center sticky top-0 z-50">
       <Link href="/" className="text-xl font-bold text-purple-600 hover:opacity-80">MyApp</Link>
       <div className="space-x-4 text-sm">
-        <Link href="/About" className="hover:text-purple-600">About</Link>
-        <Link href="/Contact" className="hover:text-purple-600">Contact</Link>
+        <Link href="/about" className="hover:text-purple-600">About</Link>
+        <Link href="/contact" className="hover:text-purple-600">Contact</Link>
 
         {isLoggedIn && (
           <button
