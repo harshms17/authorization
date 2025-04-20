@@ -50,7 +50,7 @@ export async function PATCH(
     const message = isAdmin
       ? `You have been granted admin privileges.`
       : `Your admin privileges have been revoked.`;
-    sendMail({ to: email, subject, message })
+    await sendMail({ to: email, subject, message })
       .then(() => console.log("Email sent successfully"))
       .catch((error) => console.error("Error sending email:", error));
 

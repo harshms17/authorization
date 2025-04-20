@@ -54,7 +54,7 @@ export async function PATCH(
       status === "Approved" || status === "Declined"
         ? `Your request has been ${status}.`
         : `You are blocked by the Founder.`;
-    sendMail({ to: email, subject, message })
+    await sendMail({ to: email, subject, message })
       .then(() => console.log("Email sent successfully"))
       .catch((error) => console.error("Error sending email:", error));
 

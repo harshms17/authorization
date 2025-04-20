@@ -18,24 +18,36 @@ export async function PATCH(
   const { id } = await context.params;
 
   if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-    return NextResponse.json({ error: "Invalid or missing User ID" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Invalid or missing User ID" },
+      { status: 400 }
+    );
   }
 
   const userData = await getUserFromToken(req);
   if (!userData || !("id" in userData)) {
-    return NextResponse.json({ error: "Invalid or missing token" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Invalid or missing token" },
+      { status: 401 }
+    );
   }
 
   await dbConnect();
 
   const admin = await User.findById(userData.id);
   if (!admin) {
-    return NextResponse.json({ error: "Admin user not found" }, { status: 404 });
+    return NextResponse.json(
+      { error: "Admin user not found" },
+      { status: 404 }
+    );
   }
 
   const isAdmin = await checkAdmin(admin);
   if (!isAdmin) {
-    return NextResponse.json({ error: "Access denied. Not an admin." }, { status: 403 });
+    return NextResponse.json(
+      { error: "Access denied. Not an admin." },
+      { status: 403 }
+    );
   }
 
   try {
@@ -47,7 +59,9 @@ export async function PATCH(
       return NextResponse.json({ errors: errorMessages }, { status: 400 });
     }
 
-    const updatedUser = await User.findByIdAndUpdate(id, { status: parsed.data.status });
+    const updatedUser = await User.findByIdAndUpdate(id, {
+      status: parsed.data.status,
+    });
 
     if (!updatedUser) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -59,7 +73,8 @@ export async function PATCH(
       status === "Approved" || status === "Declined"
         ? `Your request has been ${status}.`
         : `You are blocked by the admin.`;
-    sendMail({ to: email, subject, message })
+
+    await sendMail({ to: email, subject, message })
       .then(() => console.log("Email sent successfully"))
       .catch((error) => console.error("Error sending email:", error));
 
