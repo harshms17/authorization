@@ -85,6 +85,8 @@ export default function SignIn({ role, api, nextPage }: SignInProps) {
 
           {error && <p className="text-sm text-red-600 mt-1">{error}</p>}
 
+          {role === "Super Admin" && {`email = super@admin.com & password = password`}}
+          
           <button
             type="submit"
             disabled={loading}
